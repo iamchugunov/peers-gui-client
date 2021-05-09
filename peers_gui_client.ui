@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1295</width>
-    <height>738</height>
+    <width>1422</width>
+    <height>830</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -100,22 +100,170 @@
      <rect>
       <x>170</x>
       <y>30</y>
-      <width>1101</width>
-      <height>641</height>
+      <width>851</width>
+      <height>451</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="AddObjButton">
+   <widget class="QTableWidget" name="anchors_table">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>290</y>
+      <x>170</x>
+      <y>510</y>
+      <width>1101</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>16777213</height>
+     </size>
+    </property>
+    <property name="textElideMode">
+     <enum>Qt::ElideMiddle</enum>
+    </property>
+    <column>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>IP</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>x</string>
+     </property>
+     <property name="background">
+      <color>
+       <red>0</red>
+       <green>0</green>
+       <blue>0</blue>
+      </color>
+     </property>
+     <property name="foreground">
+      <brush brushstyle="NoBrush">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>y</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>z</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Master</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Role</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Connection</string>
+     </property>
+     <property name="foreground">
+      <brush brushstyle="NoBrush">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Synchronized</string>
+     </property>
+     <property name="foreground">
+      <brush brushstyle="NoBrush">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>ADRx</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>ADTx</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QTableWidget" name="tags_table">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>650</y>
+      <width>601</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>x</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>y</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>z</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>DOP</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Lifetime</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QPushButton" name="tableButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>340</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Add obj</string>
+     <string>PushButton</string>
     </property>
    </widget>
   </widget>
@@ -124,7 +272,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1295</width>
+     <width>1422</width>
      <height>21</height>
     </rect>
    </property>
