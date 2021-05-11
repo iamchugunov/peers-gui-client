@@ -6,265 +6,464 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1422</width>
-    <height>830</height>
+    <width>1597</width>
+    <height>812</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="verticalLayoutWidget">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>160</width>
-      <height>228</height>
+      <x>20</x>
+      <y>280</y>
+      <width>181</width>
+      <height>191</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QPushButton" name="ConnectButton">
-       <property name="text">
-        <string>Connect</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="DisconnectButton">
-       <property name="text">
-        <string>Disconnect</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="NewAnchorsButton">
-       <property name="text">
-        <string>Send Anchors</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="RelateToMastersButton">
-       <property name="text">
-        <string>Relate to masters</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="ConfigureButton">
-       <property name="text">
-        <string>Configure</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="StartButton">
-       <property name="text">
-        <string>Start</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="StopButton">
-       <property name="text">
-        <string>Stop</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="StateRequestButton">
-       <property name="text">
-        <string>State Request</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <property name="title">
+     <string>Floor Map</string>
+    </property>
+    <widget class="QWidget" name="verticalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>160</width>
+       <height>160</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QPushButton" name="AddMapButton">
+        <property name="text">
+         <string>Add map</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>x_0</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="x0_map_edit"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>y_0</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="y0_map_edit"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>x_Range</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="x_Range_map_edit"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>y_Range</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="y_Range_map_edit"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ClearMapButton">
+        <property name="text">
+         <string>Clear</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
-   <widget class="QLabel" name="BeepLabel">
+   <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>0</y>
-      <width>1111</width>
-      <height>16</height>
+      <x>10</x>
+      <y>10</y>
+      <width>201</width>
+      <height>261</height>
      </rect>
     </property>
-    <property name="text">
-     <string>TextLabel</string>
+    <property name="title">
+     <string>Control Panel</string>
     </property>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>179</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Anchors configuration</string>
+     </property>
+     <widget class="QWidget" name="verticalLayoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>160</width>
+        <height>83</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QPushButton" name="NewAnchorsButton">
+         <property name="text">
+          <string>Send Anchors</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="RelateToMastersButton">
+         <property name="text">
+          <string>Relate to masters</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="ConfigureButton">
+         <property name="text">
+          <string>Configure</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>179</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Connection</string>
+     </property>
+     <widget class="QWidget" name="horizontalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>158</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="ConnectButton">
+         <property name="text">
+          <string>Connect</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="DisconnectButton">
+         <property name="text">
+          <string>Disconnect</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>200</y>
+       <width>181</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>RTLS</string>
+     </property>
+     <widget class="QWidget" name="horizontalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>160</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="StartButton">
+         <property name="text">
+          <string>Start</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="StopButton">
+         <property name="text">
+          <string>Stop</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_7">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>10</y>
+      <width>1361</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Console log</string>
+    </property>
+    <widget class="QPushButton" name="StateRequestButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>158</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>State Request</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="BeepLabel">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>20</y>
+       <width>1181</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="PlotWidget" name="floor_map">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>30</y>
-      <width>851</width>
-      <height>451</height>
+      <x>220</x>
+      <y>70</y>
+      <width>721</width>
+      <height>401</height>
      </rect>
     </property>
    </widget>
-   <widget class="QTableWidget" name="anchors_table">
+   <widget class="QGroupBox" name="groupBox_5">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>510</y>
-      <width>1101</width>
-      <height>121</height>
+      <x>950</x>
+      <y>60</y>
+      <width>631</width>
+      <height>411</height>
      </rect>
     </property>
-    <property name="maximumSize">
-     <size>
-      <width>16777215</width>
-      <height>16777213</height>
-     </size>
+    <property name="title">
+     <string>Tags</string>
     </property>
-    <property name="textElideMode">
-     <enum>Qt::ElideMiddle</enum>
+    <widget class="QTableWidget" name="tags_table">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>611</width>
+       <height>381</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>x</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>y</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>z</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>DOP</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Lifetime</string>
+      </property>
+     </column>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_8">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>490</y>
+      <width>1131</width>
+      <height>281</height>
+     </rect>
     </property>
-    <column>
-     <property name="text">
-      <string>Name</string>
+    <property name="title">
+     <string>Anchors</string>
+    </property>
+    <widget class="QTableWidget" name="anchors_table">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>1111</width>
+       <height>251</height>
+      </rect>
      </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>IP</string>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777213</height>
+      </size>
      </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>x</string>
+     <property name="textElideMode">
+      <enum>Qt::ElideMiddle</enum>
      </property>
-     <property name="background">
-      <color>
-       <red>0</red>
-       <green>0</green>
-       <blue>0</blue>
-      </color>
-     </property>
-     <property name="foreground">
-      <brush brushstyle="NoBrush">
-       <color alpha="255">
+     <column>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>IP</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>x</string>
+      </property>
+      <property name="background">
+       <color>
         <red>0</red>
         <green>0</green>
         <blue>0</blue>
        </color>
-      </brush>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>y</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>z</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Master</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Role</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Connection</string>
-     </property>
-     <property name="foreground">
-      <brush brushstyle="NoBrush">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Synchronized</string>
-     </property>
-     <property name="foreground">
-      <brush brushstyle="NoBrush">
-       <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-       </color>
-      </brush>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>ADRx</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>ADTx</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QTableWidget" name="tags_table">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>650</y>
-      <width>601</width>
-      <height>121</height>
-     </rect>
-    </property>
-    <column>
-     <property name="text">
-      <string>Name</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>x</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>y</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>z</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>DOP</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Lifetime</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QPushButton" name="tableButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>340</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
+      </property>
+      <property name="foreground">
+       <brush brushstyle="NoBrush">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </brush>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>y</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>z</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Master</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Role</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Connection</string>
+      </property>
+      <property name="foreground">
+       <brush brushstyle="NoBrush">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </brush>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Synchronized</string>
+      </property>
+      <property name="foreground">
+       <brush brushstyle="NoBrush">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </brush>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>ADRx</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>ADTx</string>
+      </property>
+     </column>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -272,7 +471,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1422</width>
+     <width>1597</width>
      <height>21</height>
     </rect>
    </property>
