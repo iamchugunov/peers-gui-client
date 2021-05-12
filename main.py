@@ -19,7 +19,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         QMainWindow.__init__(self)
         self.setupUi(self)
         self.default_rf_config_filepath = "config/rf_params_ttk.json"
-        self.default_anchors_filepath = "config/anchors1.json"
+        self.default_anchors_filepath = "config/anchors.json"
         self.request_socket = socket.socket()
         self.stream_socket = socket.socket()
         self.isConnected = 0
