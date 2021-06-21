@@ -457,18 +457,45 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QCheckBox" name="log_check_box">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>60</x>
       <y>480</y>
-      <width>70</width>
-      <height>17</height>
+      <width>97</width>
+      <height>80</height>
      </rect>
     </property>
-    <property name="text">
-     <string>log_enable</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QCheckBox" name="log_check_box">
+       <property name="text">
+        <string>log_enable</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="accumulation_mod_check_box">
+       <property name="text">
+        <string>accumulation</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>buf len</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="buflen_edit"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

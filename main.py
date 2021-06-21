@@ -39,6 +39,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.AddMapButton.clicked.connect(self.AddMapButtonClicked)
         self.ClearMapButton.clicked.connect(self.ClearMapButtonClicked)
         self.log_check_box.clicked.connect(self.logcheckboxClicked)
+        self.accumulation_mod_check_box.clicked.connect(self.accumulationmodcheckboxClicked)
         self.signal.connect(self.process_object)
 
         self.floor_map.setXRange(0, 5)
@@ -165,6 +166,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             co.send_log_enable(self.request_socket)
         else:
             co.send_log_disable(self.request_socket)
+
+    def accumulationmodcheckboxClicked(self):
+        if self.accumulation_mod_check_box.isChecked():
+            co.send_accumulation_on(self.request_socket)
+        else:
+            co.send_accumulation_off(self.request_socket)
+
+    def bufleneditClicked(self):
+        print(int(self.buflen_edit.text()))
 
 
     def read_anchors_file(self, filepath):

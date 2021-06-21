@@ -74,4 +74,14 @@ def send_log_disable(s):
     data2send["type"] = 'log_disable'
     send_to_server(data2send, s)
 
+def send_accumulation_on(s):
+    data2send = {}
+    data2send["type"] = 'acc_on'
+    send_to_server(data2send, s)
+
+def send_accumulation_off(s):
+    data2send = {}
+    data2send["type"] = 'acc_off'
+    send_to_server(data2send, s)
+
 
