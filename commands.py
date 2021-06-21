@@ -64,4 +64,14 @@ def send_disconnect(s):
     data2send["type"] = 'disconnect'
     send_to_server(data2send, s)
 
+def send_log_enable(s):
+    data2send = {}
+    data2send["type"] = 'log_enable'
+    send_to_server(data2send, s)
+
+def send_log_disable(s):
+    data2send = {}
+    data2send["type"] = 'log_disable'
+    send_to_server(data2send, s)
+
 

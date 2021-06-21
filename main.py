@@ -23,6 +23,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.request_socket = socket.socket()
         self.stream_socket = socket.socket()
         self.isConnected = 0
+        self.tags = []
+        self.tags_tail = 1
+        self.avatar_dict = {"cc13455": "config/123.png"}
+
 
         self.ConnectButton.clicked.connect(self.ConnectButtonClicked)
         self.DisconnectButton.clicked.connect(self.DisconnectButtonClicked)
@@ -34,6 +38,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.StateRequestButton.clicked.connect(self.StateRequestButtonClicked)
         self.AddMapButton.clicked.connect(self.AddMapButtonClicked)
         self.ClearMapButton.clicked.connect(self.ClearMapButtonClicked)
+        self.log_check_box.clicked.connect(self.logcheckboxClicked)
         self.signal.connect(self.process_object)
 
         self.floor_map.setXRange(0, 5)
@@ -44,8 +49,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.x0_map_edit.setText("0")
         self.y0_map_edit.setText("0")
-        self.x_Range_map_edit.setText("60")
-        self.y_Range_map_edit.setText("26")
+        self.x_Range_map_edit.setText("13")
+        self.y_Range_map_edit.setText("6")
 
         self.streamthread = threading.Thread(target=self.streamer)
         self.streamthread.start()
@@ -74,6 +79,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.add_object_on_tags_table(tag)
                 else:
                     self.update_tags_table_object(tag)
+
+                match_flag = 0
+                for tag1 in self.tags:
+                    if tag1["name"] == tag["name"]:
+                        match_flag = 1
+                        tag1["x"].append(tag["x"])
+                        tag1["y"].append(tag["y"])
+                        if len(tag1["x"]) > self.tags_tail:
+                            del tag1["x"][0]
+                            del tag1["y"][0]
+                        break
+                if match_flag == 0:
+                    new_tag = {}
+                    new_tag["name"] = tag["name"]
+                    new_tag["x"] = []
+                    new_tag["x"].append(tag["x"])
+                    new_tag["y"] = []
+                    new_tag["y"].append(tag["y"])
+                    self.tags.append(new_tag)
 
         self.isConnected = 1
         self.BeepLabel.setText("Connected")
@@ -135,6 +159,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 opts = item.opts
             except:
                 self.floor_map.removeItem(item)
+
+    def logcheckboxClicked(self):
+        if self.log_check_box.isChecked():
+            co.send_log_enable(self.request_socket)
+        else:
+            co.send_log_disable(self.request_socket)
 
 
     def read_anchors_file(self, filepath):
@@ -200,13 +230,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             item_symbol_pen = 'r'
             item_symbol_Brush = '0.2'
 
+        # match_flag = 0
+        # for tag in self.avatar_dict:
+        #     if tag["key"] == obj["name"]:
+        #         pic = tag["value"]
+        #         match_flag = 1
+        #         break
+
+        # if match_flag:
+        #     img = Image.open(pic)
+        #     img_data = np.flipud(np.array(img))
+        #     g = pg.ImageItem(img_data.transpose([1, 0, 2]), name=obj["name"])
+        #
+        # else:
         g = pg.ScatterPlotItem([obj["x"]], [obj["y"]],
-                               size = 10,
-                               pen=item_pen,
-                               symbol=item_symbol,
-                               symbolPen=item_symbol_pen,
-                               symbolBrush=item_symbol_Brush,
-                               name=obj["name"])
+                                size = 10,
+                                pen=item_pen,
+                                symbol=item_symbol,
+                                symbolPen=item_symbol_pen,
+                                symbolBrush=item_symbol_Brush,
+                                name=obj["name"])
         self.floor_map.addItem(g)
 
     def add_object_on_anchor_table(self, obj):
@@ -259,8 +302,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def update_object(self, obj, num):
+
+        match_flag = 0
+        for tag1 in self.tags:
+            if tag1["name"] == obj["name"]:
+                match_flag = 1
+                tag1["x"].append(obj["x"])
+                tag1["y"].append(obj["y"])
+                if len(tag1["x"]) > self.tags_tail:
+                    del tag1["x"][0]
+                    del tag1["y"][0]
+                break
+        if match_flag == 0:
+            tag1 = {}
+            tag1["name"] = obj["name"]
+            tag1["x"] = []
+            tag1["x"].append(obj["x"])
+            tag1["y"] = []
+            tag1["y"].append(obj["y"])
+            self.tags.append(tag1)
+        x_sorted = sorted(tag1["x"])
+        y_sorted = sorted(tag1["y"])
         items = self.floor_map.plotItem.dataItems
-        items[num].setData([obj["x"]], [obj["y"]])
+        if len(tag1["x"]) == self.tags_tail:
+            items[num].setData([x_sorted[int(self.tags_tail/2)]], [y_sorted[int(self.tags_tail/2)]])
+
 
     def update_anchor_table_object(self, obj):
         numRows = self.anchors_table.rowCount()

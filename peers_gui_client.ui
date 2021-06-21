@@ -281,155 +281,194 @@
      </property>
     </widget>
    </widget>
-   <widget class="PlotWidget" name="floor_map">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>70</y>
-      <width>721</width>
-      <height>401</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_5">
-    <property name="geometry">
-     <rect>
-      <x>950</x>
+      <x>230</x>
       <y>60</y>
-      <width>631</width>
-      <height>411</height>
+      <width>1341</width>
+      <height>711</height>
      </rect>
     </property>
-    <property name="title">
-     <string>Tags</string>
+    <property name="currentIndex">
+     <number>1</number>
     </property>
-    <widget class="QTableWidget" name="tags_table">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>611</width>
-       <height>381</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string>Name</string>
+    <property name="tabBarAutoHide">
+     <bool>false</bool>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Map</string>
+     </attribute>
+     <widget class="PlotWidget" name="floor_map">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>1311</width>
+        <height>661</height>
+       </rect>
       </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>x</string>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Info</string>
+     </attribute>
+     <widget class="QGroupBox" name="groupBox_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>1221</width>
+        <height>341</height>
+       </rect>
       </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>y</string>
+      <property name="title">
+       <string>Tags</string>
       </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>z</string>
+      <widget class="QTableWidget" name="tags_table">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>1191</width>
+         <height>311</height>
+        </rect>
+       </property>
+       <column>
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>x</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>y</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>z</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>DOP</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Lifetime</string>
+        </property>
+       </column>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_8">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>360</y>
+        <width>1221</width>
+        <height>281</height>
+       </rect>
       </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>DOP</string>
+      <property name="title">
+       <string>Anchors</string>
       </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Lifetime</string>
-      </property>
-     </column>
+      <widget class="QTableWidget" name="anchors_table">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>1201</width>
+         <height>251</height>
+        </rect>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777213</height>
+        </size>
+       </property>
+       <property name="textElideMode">
+        <enum>Qt::ElideMiddle</enum>
+       </property>
+       <column>
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>IP</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>x</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>y</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>z</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Master</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Role</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Connection</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Synchronized</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>ADRx</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>ADTx</string>
+        </property>
+       </column>
+      </widget>
+     </widget>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox_8">
+   <widget class="QCheckBox" name="log_check_box">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>490</y>
-      <width>1131</width>
-      <height>281</height>
+      <x>70</x>
+      <y>480</y>
+      <width>70</width>
+      <height>17</height>
      </rect>
     </property>
-    <property name="title">
-     <string>Anchors</string>
+    <property name="text">
+     <string>log_enable</string>
     </property>
-    <widget class="QTableWidget" name="anchors_table">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>1111</width>
-       <height>251</height>
-      </rect>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16777213</height>
-      </size>
-     </property>
-     <property name="textElideMode">
-      <enum>Qt::ElideMiddle</enum>
-     </property>
-     <column>
-      <property name="text">
-       <string>Name</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>IP</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>x</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>y</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>z</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Master</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Role</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Connection</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Synchronized</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>ADRx</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>ADTx</string>
-      </property>
-     </column>
-    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
