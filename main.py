@@ -169,12 +169,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def accumulationmodcheckboxClicked(self):
         if self.accumulation_mod_check_box.isChecked():
-            co.send_accumulation_on(self.request_socket)
+            buf_len = int(self.buflen_edit.text())
+            co.send_accumulation_on(self.request_socket, buf_len)
         else:
             co.send_accumulation_off(self.request_socket)
 
-    def bufleneditClicked(self):
-        print(int(self.buflen_edit.text()))
 
 
     def read_anchors_file(self, filepath):
