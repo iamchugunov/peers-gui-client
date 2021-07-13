@@ -1,0 +1,11 @@
+{
+  "ch_num": 1,
+  "prf": 16,
+  "datarate": 110,
+  "preamble_code": 1,
+  "preamble_len": 2048,
+  "pac": 16,
+  "nsfd": 0,
+  "diagnostic": 0,
+  "lag": 20000
+}

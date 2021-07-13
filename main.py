@@ -18,15 +18,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.setupUi(self)
-        self.default_rf_config_filepath = "config/rf_params_ttk.json"
+        self.default_rf_config_filepath = "config/rf_params_nik.json"
         self.default_anchors_filepath = "config/anchors.json"
         self.request_socket = socket.socket()
         self.stream_socket = socket.socket()
         self.isConnected = 0
         self.tags = []
-        self.tags_tail = 1
+        self.tags_tail = 10
         self.avatar_dict = {"cc13455": "config/123.png"}
-
+        self.alpha = 0.0
 
         self.ConnectButton.clicked.connect(self.ConnectButtonClicked)
         self.DisconnectButton.clicked.connect(self.DisconnectButtonClicked)
@@ -252,13 +252,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #     g = pg.ImageItem(img_data.transpose([1, 0, 2]), name=obj["name"])
         #
         # else:
-        g = pg.ScatterPlotItem([obj["x"]], [obj["y"]],
-                                size = 10,
-                                pen=item_pen,
-                                symbol=item_symbol,
-                                symbolPen=item_symbol_pen,
-                                symbolBrush=item_symbol_Brush,
-                                name=obj["name"])
+        if obj["type"] == "tag":
+            g = pg.PlotCurveItem([obj["x"]], [obj["y"]],
+                                   width=3,
+                                   pen=pg.mkPen(width=3, color='r'),
+                                   symbol=item_symbol,
+                                   symbolPen=item_symbol_pen,
+                                   symbolBrush=item_symbol_Brush,
+                                   name=obj["name"])
+        else:
+            g = pg.ScatterPlotItem([obj["x"]], [obj["y"]],
+                                   size=10,
+                                   pen=item_pen,
+                                   symbol=item_symbol,
+                                   symbolPen=item_symbol_pen,
+                                   symbolBrush=item_symbol_Brush,
+                                   name=obj["name"])
+
         self.floor_map.addItem(g)
 
     def add_object_on_anchor_table(self, obj):
@@ -316,8 +326,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for tag1 in self.tags:
             if tag1["name"] == obj["name"]:
                 match_flag = 1
-                tag1["x"].append(obj["x"])
-                tag1["y"].append(obj["y"])
+                tag1["x"].append(obj["x"] * (1 - self.alpha) + self.alpha * tag1["x"][-1])
+                tag1["y"].append(obj["y"] * (1 - self.alpha) + self.alpha * tag1["y"][-1])
                 if len(tag1["x"]) > self.tags_tail:
                     del tag1["x"][0]
                     del tag1["y"][0]
@@ -334,7 +344,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         y_sorted = sorted(tag1["y"])
         items = self.floor_map.plotItem.dataItems
         if len(tag1["x"]) == self.tags_tail:
-            items[num].setData([x_sorted[int(self.tags_tail/2)]], [y_sorted[int(self.tags_tail/2)]])
+            #items[num].setData([x_sorted[int(self.tags_tail/2)]], [y_sorted[int(self.tags_tail/2)]])
+            items[num].setData(tag1["x"], tag1["y"])
 
 
     def update_anchor_table_object(self, obj):
