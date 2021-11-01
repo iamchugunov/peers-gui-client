@@ -114,4 +114,4 @@ dmypy.json
 .pyre/
 
 /.idea/*
-/venv2
+/venv2/*
