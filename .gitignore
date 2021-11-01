@@ -113,6 +113,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-/venv2/*
-/.idea/*
+venv2/*
+.idea/*
 
