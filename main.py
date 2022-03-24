@@ -26,7 +26,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tags = []
         self.tags_tail = 10
         self.avatar_dict = {"cc13455": "config/123.png"}
-        self.alpha = 0.0
+        self.alpha = 0.9
 
         self.ConnectButton.clicked.connect(self.ConnectButtonClicked)
         self.DisconnectButton.clicked.connect(self.DisconnectButtonClicked)
