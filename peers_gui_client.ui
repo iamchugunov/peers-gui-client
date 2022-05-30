@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1597</width>
-    <height>812</height>
+    <height>880</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>280</y>
+      <y>270</y>
       <width>181</width>
       <height>191</height>
      </rect>
@@ -45,13 +45,6 @@
       </item>
       <item>
        <layout class="QFormLayout" name="formLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>x_0</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="1">
          <widget class="QLineEdit" name="x0_map_edit"/>
         </item>
@@ -84,6 +77,13 @@
         </item>
         <item row="3" column="1">
          <widget class="QLineEdit" name="y_Range_map_edit"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>x_0</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -287,11 +287,11 @@
       <x>230</x>
       <y>60</y>
       <width>1341</width>
-      <height>711</height>
+      <height>771</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -306,7 +306,7 @@
         <x>10</x>
         <y>10</y>
         <width>1311</width>
-        <height>661</height>
+        <height>731</height>
        </rect>
       </property>
      </widget>
@@ -321,7 +321,7 @@
         <x>10</x>
         <y>10</y>
         <width>1221</width>
-        <height>341</height>
+        <height>381</height>
        </rect>
       </property>
       <property name="title">
@@ -333,7 +333,7 @@
          <x>10</x>
          <y>20</y>
          <width>1191</width>
-         <height>311</height>
+         <height>351</height>
         </rect>
        </property>
        <column>
@@ -372,9 +372,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>360</y>
+        <y>400</y>
         <width>1221</width>
-        <height>281</height>
+        <height>341</height>
        </rect>
       </property>
       <property name="title">
@@ -386,7 +386,7 @@
          <x>10</x>
          <y>20</y>
          <width>1201</width>
-         <height>251</height>
+         <height>311</height>
         </rect>
        </property>
        <property name="maximumSize">
@@ -453,15 +453,103 @@
          <string>ADTx</string>
         </property>
        </column>
+       <column>
+        <property name="text">
+         <string>Ref tag correction</string>
+        </property>
+       </column>
       </widget>
      </widget>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_9">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>460</y>
+      <width>161</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Reference tag</string>
+    </property>
+    <widget class="QWidget" name="verticalLayoutWidget_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>141</width>
+       <height>154</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <layout class="QFormLayout" name="formLayout_2">
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>x</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>y</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="y_ref_tag"/>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>z</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLineEdit" name="z_ref_tag"/>
+        </item>
+        <item row="0" column="1">
+         <widget class="QCheckBox" name="ref_tag_checkbox">
+          <property name="text">
+           <string>Enable</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="x_ref_tag"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="ID_ref_tag"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>ID</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="update_ref_tag_button">
+        <property name="text">
+         <string>Update</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>480</y>
+      <y>730</y>
       <width>97</width>
       <height>80</height>
      </rect>
@@ -471,6 +559,9 @@
       <widget class="QCheckBox" name="log_check_box">
        <property name="text">
         <string>log_enable</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -496,6 +587,41 @@
       </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_10">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>650</y>
+      <width>151</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Tags height</string>
+    </property>
+    <widget class="QWidget" name="horizontalLayoutWidget_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QLineEdit" name="tag_h0_Edit"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="tag_h0_button">
+        <property name="text">
+         <string>Update</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

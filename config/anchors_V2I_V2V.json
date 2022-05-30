@@ -1,0 +1,6 @@
+{"number": 1, "master_number": 0, "IP": "192.168.99.3", "ADRx": 16492, "ADTx": 16492, "x": 11.57, "y": 5.38, "z": 2.72, "Role": "Master", "lag":  2000}
+{"number": 2, "master_number": 1, "IP": "192.168.99.5", "ADRx": 16492, "ADTx": 16492, "x": 11.57, "y": 0.54, "z": 2.72, "Role": "Slave", "lag":  2000}
+{"number": 3, "master_number": 1, "IP": "192.168.99.6", "ADRx": 16492, "ADTx": 16492, "x": 0.51, "y": 0.42, "z": 2.64, "Role": "Slave", "lag":  3000}
+{"number": 4, "master_number": 1, "IP": "192.168.99.4", "ADRx": 16492, "ADTx": 16492, "x": 0.72, "y": 5.27, "z": 2.68, "Role": "Slave", "lag":  4000}
+{"number": 5, "master_number": 1, "IP": "192.168.99.15", "ADRx": 16492, "ADTx": 16492, "x": 0, "y": 0, "z": 0, "Role": "toa_tag", "lag":  0}
+{"number": 6, "master_number": 1, "IP": "192.168.99.16", "ADRx": 16492, "ADTx": 16492, "x": 0, "y": 0, "z": 0, "Role": "toa_tag", "lag":  0}

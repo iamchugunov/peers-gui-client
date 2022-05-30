@@ -85,4 +85,24 @@ def send_accumulation_off(s):
     data2send["type"] = 'acc_off'
     send_to_server(data2send, s)
 
+def send_ref_tag_state(s, state):
+    data2send = {}
+    data2send["type"] = 'ref_tag_state'
+    data2send["state"] = state
+    send_to_server(data2send, s)
+
+def send_update_ref_tag(s, name, x, y, z):
+    data2send = {}
+    data2send["type"] = 'update_ref_tag'
+    data2send["name"] = name
+    data2send["x"] = x
+    data2send["y"] = y
+    data2send["z"] = z
+    send_to_server(data2send, s)
+
+def send_update_tag_hei(s, h):
+    data2send = {}
+    data2send["type"] = 'update_tag_hei'
+    data2send["h"] = h
+    send_to_server(data2send, s)
 

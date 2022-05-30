@@ -41,6 +41,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.log_check_box.clicked.connect(self.logcheckboxClicked)
         self.accumulation_mod_check_box.clicked.connect(self.accumulationmodcheckboxClicked)
         self.signal.connect(self.process_object)
+        self.ref_tag_checkbox.clicked.connect(self.reftagcheckboxClicked)
+        self.update_ref_tag_button.clicked.connect(self.reftagupdate)
+        self.tag_h0_button.clicked.connect(self.tagh0update)
 
         self.floor_map.setXRange(0, 5)
         self.floor_map.setYRange(0, 5)
@@ -100,6 +103,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     new_tag["y"].append(tag["y"])
                     self.tags.append(new_tag)
 
+        if msg["use_ref_tag"]:
+            self.ref_tag_checkbox.setChecked(True)
+            ref_tag = msg["ref_tag"]
+            self.x_ref_tag.setText(str(ref_tag["x"]))
+            self.y_ref_tag.setText(str(ref_tag["y"]))
+            self.z_ref_tag.setText(str(ref_tag["h"]))
+            self.ID_ref_tag.setText(ref_tag["name"])
+        else:
+            self.ref_tag_checkbox.setChecked(False)
+
+        self.tag_h0_Edit.setText(str(msg["tag_hei"]))
+
         self.isConnected = 1
         self.BeepLabel.setText("Connected")
 
@@ -144,14 +159,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def AddMapButtonClicked(self):
         # self.ClearMapButtonClicked()
         img = Image.open('config/map.png')
-        img_data = np.flipud(np.array(img))
-        img = pg.ImageItem(img_data.transpose([1, 0, 2]), name="map")
+#        img_data = np.flipud(np.array(img))
+        img = img.transpose(Image.ROTATE_270)
+        img_data = (np.array(img))
+#        img = pg.ImageItem(img_data.transpose([1, 0, 2]), name="map")
+        img = pg.ImageItem(img_data, name="map")
+        print('transposed')
         x0 = int(self.x0_map_edit.text())
         y0 = int(self.y0_map_edit.text())
         xR = int(self.x_Range_map_edit.text())
         yR = int(self.y_Range_map_edit.text())
+        print('read')
         rect = QRect(x0, y0, xR, yR)
+        print('rect made')
         img.setRect(rect)
+        print('set rect')
         self.floor_map.addItem(img)
 
     def ClearMapButtonClicked(self):
@@ -166,6 +188,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             co.send_log_enable(self.request_socket)
         else:
             co.send_log_disable(self.request_socket)
+
+    def reftagcheckboxClicked(self):
+        if self.ref_tag_checkbox.isChecked():
+            co.send_ref_tag_state(self.request_socket, True)
+        else:
+            co.send_ref_tag_state(self.request_socket, False)
+
+    def reftagupdate(self):
+        name = self.ID_ref_tag.text()
+        x = float(self.x_ref_tag.text())
+        y = float(self.y_ref_tag.text())
+        z = float(self.z_ref_tag.text())
+        co.send_update_ref_tag(self.request_socket, name, x, y, z)
+
+    def tagh0update(self):
+        h = float(self.tag_h0_Edit.text())
+        co.send_update_tag_hei(self.request_socket, h)
 
     def accumulationmodcheckboxClicked(self):
         if self.accumulation_mod_check_box.isChecked():
@@ -194,7 +233,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 rcv_size = int.from_bytes(self.stream_socket.recv(4), 'little')
                 msg = json.loads(self.stream_socket.recv(rcv_size).decode())
                 self.signal.emit(msg)
-                print(msg)
+                # print(msg)
                 self.BeepLabel.setText(json.dumps(msg))
 
     def process_object(self, obj):
@@ -255,7 +294,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if obj["type"] == "tag":
             g = pg.PlotCurveItem([obj["x"]], [obj["y"]],
                                    width=3,
-                                   pen=pg.mkPen(width=3, color='r'),
+                                   pen=pg.mkPen(width=5, color='r'),
                                    symbol=item_symbol,
                                    symbolPen=item_symbol_pen,
                                    symbolBrush=item_symbol_Brush,
@@ -301,6 +340,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.anchors_table.item(numRows, 8).setForeground(sync_color)
         self.anchors_table.setItem(numRows, 9, QTableWidgetItem(str(obj["ADRx"])))
         self.anchors_table.setItem(numRows, 10, QTableWidgetItem(str(obj["ADTx"])))
+        self.anchors_table.setItem(numRows, 11, QTableWidgetItem(str(obj["ref_correction"])))
 
     def add_object_on_tags_table(self, obj):
         numRows = self.tags_table.rowCount()
@@ -377,6 +417,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.anchors_table.item(i, 8).setForeground(sync_color)
                 self.anchors_table.setItem(i, 9, QTableWidgetItem(str(obj["ADRx"])))
                 self.anchors_table.setItem(i, 10, QTableWidgetItem(str(obj["ADTx"])))
+                self.anchors_table.setItem(i, 11, QTableWidgetItem(str(round(obj["ref_correction"], 2))))
                 break
 
     def update_tags_table_object(self, obj):
