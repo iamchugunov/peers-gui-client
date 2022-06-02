@@ -24,9 +24,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.stream_socket = socket.socket()
         self.isConnected = 0
         self.tags = []
-        self.tags_tail = 10
+        self.tags_tail = 5
         self.avatar_dict = {"cc13455": "config/123.png"}
         self.alpha = 0.9
+        self.objects = []
 
         self.ConnectButton.clicked.connect(self.ConnectButtonClicked)
         self.DisconnectButton.clicked.connect(self.DisconnectButtonClicked)
@@ -55,6 +56,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.y0_map_edit.setText("0")
         self.x_Range_map_edit.setText("13")
         self.y_Range_map_edit.setText("6")
+
+        self.tag_border_color = pg.mkColor((0, 0, 255, 255))
+        self.tag_border_pen = pg.mkPen(color=self.tag_border_color, width=1)
+        self.tag_fill_color = pg.mkColor((255, 0, 0, 255))
+        self.tag_fill_brush = pg.mkBrush(color=self.tag_fill_color)
+        self.tag_symbol = 'o'
+        self.tag_size = 5
+
+        self.tag_text_border_color = pg.mkColor((0, 255, 0, 255))
+        self.tag_text_border_pen = pg.mkPen(color=self.tag_text_border_color, width=0.5)
+        self.tag_text_fill_color = pg.mkColor((0, 255, 0, 100))
+        self.tag_text_fill_brush = pg.mkBrush(color=self.tag_text_fill_color)
+        self.tag_text_color = pg.mkColor((0, 0, 0, 255))
+
+        self.anchor_border_color = pg.mkColor((255, 0, 0, 255))
+        self.anchor_border_pen = pg.mkPen(color=self.anchor_border_color, width=2)
+        self.anchor_fill_color = pg.mkColor((0, 0, 255, 255))
+        self.anchor_fill_brush = pg.mkBrush(color=self.anchor_fill_color)
+        self.anchor_symbol = 't1'
+        self.anchor_size = 10
+
 
         self.streamthread = threading.Thread(target=self.streamer)
         self.streamthread.start()
@@ -237,19 +259,183 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.BeepLabel.setText(json.dumps(msg))
 
     def process_object(self, obj):
-        match_flag, num = self.is_on_map(obj)
-        if match_flag:
-            self.update_object(obj, num)
-            if obj["type"] == "tag":
-                self.update_tags_table_object(obj)
-            if obj["type"] == "anchor":
-                self.update_anchor_table_object(obj)
-        else:
-            self.add_object_on_map(obj)
-            if obj["type"] == "tag":
-                self.add_object_on_tags_table(obj)
-            elif obj["type"] == "anchor":
-                self.add_object_on_anchor_table(obj)
+        # match_flag, num = self.is_on_map(obj)
+        # if match_flag:
+        #     self.update_object(obj, num)
+        #     if obj["type"] == "tag":
+        #         self.update_tags_table_object(obj)
+        #     if obj["type"] == "anchor":
+        #         self.update_anchor_table_object(obj)
+        # else:
+        #     self.add_object_on_map(obj)
+        #     if obj["type"] == "tag":
+        #         self.add_object_on_tags_table(obj)
+        #     elif obj["type"] == "anchor":
+        #         self.add_object_on_anchor_table(obj)
+        match_flag = False
+        for cur_obj in self.objects:
+            if cur_obj["name"] == obj["name"]:
+                self.update_existing_object(cur_obj, obj)
+                match_flag = True
+                break
+        if not match_flag:
+            self.add_new_object(obj)
+
+    def add_new_object(self, obj):
+        if obj["type"] == "tag":
+            x = obj["x"]
+            y = obj["y"]
+            z = obj["z"]
+            obj["x"] = []
+            obj["x"].append(x)
+            obj["y"] = []
+            obj["y"].append(y)
+            obj["z"] = []
+            obj["z"].append(z)
+            point = pg.ScatterPlotItem(obj["x"], obj["y"],
+                                       size=self.tag_size,
+                                       pen=self.tag_border_pen,
+                                       brush=self.tag_fill_brush,
+                                       symbol=self.tag_symbol)
+            self.floor_map.addItem(point)
+            obj["point"] = point
+            text = obj["name"]
+            text += "\nx=" + str(round(obj["x"][-1], 2)) + " m"
+            text += "\ny=" + str(round(obj["y"][-1], 2)) + " m"
+            text += "\nz=" + str(round(obj["z"][-1], 2)) + " m"
+            text += "\nlifetime="
+            text += "\n" + str(round(obj["lifetime"], 2)) + " sec"
+            t = pg.TextItem(text,
+                            border=self.tag_text_border_pen,
+                            fill=self.tag_text_fill_brush,
+                            color=self.tag_text_color)
+            t.setPos(round(obj["x"][-1], 2), round(obj["y"][-1], 2))
+            obj["text"] = t
+            self.floor_map.addItem(t)
+
+            numRows = self.tags_table.rowCount()
+            obj["row_on_table"] = numRows
+            self.tags_table.insertRow(numRows)
+            self.tags_table.setItem(numRows, 0, QTableWidgetItem(obj["name"]))
+            self.tags_table.setItem(numRows, 1, QTableWidgetItem(str(round(obj["x"][-1], 2))))
+            self.tags_table.setItem(numRows, 2, QTableWidgetItem(str(round(obj["y"][-1], 2))))
+            self.tags_table.setItem(numRows, 3, QTableWidgetItem(str(round(obj["z"][-1], 2))))
+            self.tags_table.setItem(numRows, 4, QTableWidgetItem(str(round(obj["dop"], 2))))
+            if obj["dop"] < 1.5:
+                dop_color = QtGui.QColor(0, 255, 0)
+            elif obj["dop"] < 3.0:
+                dop_color = QtGui.QColor(255, 255, 0)
+            else:
+                dop_color = QtGui.QColor(255, 0, 0)
+            self.tags_table.item(numRows, 4).setForeground(dop_color)
+            self.tags_table.setItem(numRows, 5, QTableWidgetItem(str(round(obj["lifetime"], 2))))
+            self.objects.append(obj)
+        elif obj["type"] == "anchor":
+            point = pg.ScatterPlotItem([obj["x"]], [obj["y"]],
+                                       size=self.anchor_size,
+                                       pen=self.anchor_border_pen,
+                                       brush=self.anchor_fill_brush,
+                                       symbol=self.anchor_symbol)
+            self.floor_map.addItem(point)
+            obj["point"] = point
+            numRows = self.anchors_table.rowCount()
+            obj["row_on_table"] = numRows
+            self.anchors_table.insertRow(numRows)
+            self.anchors_table.setItem(numRows, 0, QTableWidgetItem(obj["name"]))
+            self.anchors_table.setItem(numRows, 1, QTableWidgetItem(obj["IP"]))
+            self.anchors_table.setItem(numRows, 2, QTableWidgetItem(str(round(obj["x"], 2))))
+            self.anchors_table.setItem(numRows, 3, QTableWidgetItem(str(round(obj["y"], 2))))
+            self.anchors_table.setItem(numRows, 4, QTableWidgetItem(str(round(obj["z"], 2))))
+            if obj["role"] == "Master" or not obj["master_name"]:
+                obj["master_name"] = "-"
+            self.anchors_table.setItem(numRows, 5, QTableWidgetItem(obj["master_name"]))
+            self.anchors_table.setItem(numRows, 6, QTableWidgetItem(obj["role"]))
+            if obj["connection"] == 1:
+                connect_item = QTableWidgetItem("Online")
+                connect_color = QtGui.QColor(0, 255, 0)
+            elif obj["connection"] == 0:
+                connect_item = QTableWidgetItem("Offline")
+                connect_color = QtGui.QColor(255, 0, 0)
+            self.anchors_table.setItem(numRows, 7, connect_item)
+            self.anchors_table.item(numRows, 7).setForeground(connect_color)
+            if obj["sync_flag"] == 1:
+                sync_item = QTableWidgetItem("Synchronized")
+                sync_color = QtGui.QColor(0, 255, 0)
+            elif obj["sync_flag"] == 0:
+                sync_item = QTableWidgetItem("Synchronization Lost")
+                sync_color = QtGui.QColor(255, 0, 0)
+            self.anchors_table.setItem(numRows, 8, sync_item)
+            self.anchors_table.item(numRows, 8).setForeground(sync_color)
+            self.anchors_table.setItem(numRows, 9, QTableWidgetItem(str(obj["ADRx"])))
+            self.anchors_table.setItem(numRows, 10, QTableWidgetItem(str(obj["ADTx"])))
+            self.anchors_table.setItem(numRows, 11, QTableWidgetItem(str(obj["ref_correction"])))
+
+            self.objects.append(obj)
+
+    def update_existing_object(self, obj, msg):
+        if obj["type"] == "tag":
+            obj["x"].append(msg["x"] * (1 - self.alpha) + self.alpha * obj["x"][-1])
+            obj["y"].append(msg["y"] * (1 - self.alpha) + self.alpha * obj["y"][-1])
+            obj["z"].append(msg["z"] * (1 - self.alpha) + self.alpha * obj["z"][-1])
+            if len(obj["x"]) > self.tags_tail:
+                del obj["x"][0]
+                del obj["y"][0]
+            obj["dop"] = msg["dop"]
+            obj["lifetime"] = msg["lifetime"]
+
+            obj["point"].setData(obj["x"], obj["y"])
+            obj["text"].setPos(round(obj["x"][-1], 2), round(obj["y"][-1], 2))
+            text = obj["name"]
+            text += "\nx=" + str(round(obj["x"][-1], 2)) + " m"
+            text += "\ny=" + str(round(obj["y"][-1], 2)) + " m"
+            text += "\nz=" + str(round(obj["z"][-1], 2)) + " m"
+            text += "\nlifetime="
+            text += "\n" + str(round(obj["lifetime"], 2)) + " sec"
+            obj["text"].setText(text)
+
+            i = obj["row_on_table"]
+            self.tags_table.setItem(i, 1, QTableWidgetItem(str(round(obj["x"][-1], 2))))
+            self.tags_table.setItem(i, 2, QTableWidgetItem(str(round(obj["y"][-1], 2))))
+            self.tags_table.setItem(i, 3, QTableWidgetItem(str(round(obj["z"][-1], 2))))
+            self.tags_table.setItem(i, 4, QTableWidgetItem(str(round(obj["dop"], 2))))
+            if obj["dop"] < 1.5:
+                dop_color = QtGui.QColor(0, 255, 0)
+            elif obj["dop"] < 3.0:
+                dop_color = QtGui.QColor(255, 255, 0)
+            else:
+                dop_color = QtGui.QColor(255, 0, 0)
+            self.tags_table.item(i, 4).setForeground(dop_color)
+            self.tags_table.setItem(i, 5, QTableWidgetItem(str(round(obj["lifetime"], 2))))
+        elif obj["type"] == "anchor":
+            obj["sync_flag"] = msg["sync_flag"]
+            obj["ref_correction"] = msg["ref_correction"]
+            i = obj["row_on_table"]
+            self.anchors_table.setItem(i, 2, QTableWidgetItem(str(round(obj["x"], 2))))
+            self.anchors_table.setItem(i, 3, QTableWidgetItem(str(round(obj["y"], 2))))
+            self.anchors_table.setItem(i, 4, QTableWidgetItem(str(round(obj["z"], 2))))
+            if obj["role"] == "Master" or not obj["master_name"]:
+                obj["master_name"] = "-"
+            self.anchors_table.setItem(i, 5, QTableWidgetItem(obj["master_name"]))
+            self.anchors_table.setItem(i, 6, QTableWidgetItem(obj["role"]))
+            if obj["connection"] == 1:
+                connect_item = QTableWidgetItem("Online")
+                connect_color = QtGui.QColor(0, 255, 0)
+            elif obj["connection"] == 0:
+                connect_item = QTableWidgetItem("Offline")
+                connect_color = QtGui.QColor(255, 0, 0)
+            self.anchors_table.setItem(i, 7, connect_item)
+            self.anchors_table.item(i, 7).setForeground(connect_color)
+            if obj["sync_flag"] == 1:
+                sync_item = QTableWidgetItem("Synchronized")
+                sync_color = QtGui.QColor(0, 255, 0)
+            elif obj["sync_flag"] == 0:
+                sync_item = QTableWidgetItem("Synchronization Lost")
+                sync_color = QtGui.QColor(255, 0, 0)
+            self.anchors_table.setItem(i, 8, sync_item)
+            self.anchors_table.item(i, 8).setForeground(sync_color)
+            self.anchors_table.setItem(i, 9, QTableWidgetItem(str(obj["ADRx"])))
+            self.anchors_table.setItem(i, 10, QTableWidgetItem(str(obj["ADTx"])))
+            self.anchors_table.setItem(i, 11, QTableWidgetItem(str(round(obj["ref_correction"], 2))))
 
 
     def is_on_map(self, obj):
@@ -318,7 +504,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.anchors_table.setItem(numRows, 2, QTableWidgetItem(str(round(obj["x"], 2))))
         self.anchors_table.setItem(numRows, 3, QTableWidgetItem(str(round(obj["y"], 2))))
         self.anchors_table.setItem(numRows, 4, QTableWidgetItem(str(round(obj["z"], 2))))
-        if obj["role"] == "Master":
+        if obj["role"] == "Master" or not obj["master_name"]:
             obj["master_name"] = "-"
         self.anchors_table.setItem(numRows, 5, QTableWidgetItem(obj["master_name"]))
         self.anchors_table.setItem(numRows, 6, QTableWidgetItem(obj["role"]))
@@ -395,7 +581,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.anchors_table.setItem(i, 2, QTableWidgetItem(str(round(obj["x"], 2))))
                 self.anchors_table.setItem(i, 3, QTableWidgetItem(str(round(obj["y"], 2))))
                 self.anchors_table.setItem(i, 4, QTableWidgetItem(str(round(obj["z"], 2))))
-                if obj["role"] == "Master":
+                if obj["role"] == "Master" or not obj["master_name"]:
                     obj["master_name"] = "-"
                 self.anchors_table.setItem(i, 5, QTableWidgetItem(obj["master_name"]))
                 self.anchors_table.setItem(i, 6, QTableWidgetItem(obj["role"]))

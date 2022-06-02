@@ -1,4 +1,4 @@
-{"number": 1, "master_number": 0, "IP": "192.168.99.3", "ADRx": 16492, "ADTx": 16492, "x": 11.40, "y": 5.24, "z": 2.63, "Role": "Master", "lag":  2000}
+{"number": 1, "master_number": 0, "IP": "192.168.99.6", "ADRx": 16492, "ADTx": 16492, "x": 11.40, "y": 5.24, "z": 2.63, "Role": "Master", "lag":  2000}
 {"number": 2, "master_number": 1, "IP": "192.168.99.5", "ADRx": 16492, "ADTx": 16492, "x": 11.38, "y": 0.47, "z": 2.84, "Role": "Slave", "lag":  2000}
-{"number": 3, "master_number": 1, "IP": "192.168.99.6", "ADRx": 16492, "ADTx": 16492, "x": 0.48, "y": 0.47, "z": 2.67, "Role": "Slave", "lag":  3000}
+{"number": 3, "master_number": 1, "IP": "192.168.99.3", "ADRx": 16492, "ADTx": 16492, "x": 0.48, "y": 0.47, "z": 2.67, "Role": "Slave", "lag":  3000}
 {"number": 4, "master_number": 1, "IP": "192.168.99.4", "ADRx": 16492, "ADTx": 16492, "x": 0.48, "y": 5.24, "z": 2.62, "Role": "Slave", "lag":  4000}
